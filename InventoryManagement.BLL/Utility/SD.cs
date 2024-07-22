@@ -8,6 +8,7 @@ namespace InventoryManagement.BLL.Utility
 {
     public static class SD
     {
+        public const string SuperAdmin = "SuperAdmin";
         public const string Manager = "Manager";
         public const string Operator = "Operator";
     }

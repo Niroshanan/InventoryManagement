@@ -19,6 +19,8 @@ namespace InventoryManagement.DAL.Data
         public DbSet<Purchase> Purchases { get; set; }
         public DbSet<Sale> Sales { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<PurchaseProduct> PurchaseProducts { get; set; }
+        public DbSet<SaleProduct> SaleProducts { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -27,6 +29,11 @@ namespace InventoryManagement.DAL.Data
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<StoreProduct>().HasKey(sp => new { sp.StoreId, sp.ProductId });
+            modelBuilder.Entity<PurchaseProduct>().HasKey(pp => new { pp.PurchaseId, pp.ProductId });
+            modelBuilder.Entity<SaleProduct>().HasKey(sp => new { sp.SaleId, sp.ProductId });
+
+            Guid storeId1 = Guid.NewGuid();
+            Guid storeId2 = Guid.NewGuid();
 
             Guid electronicsCategoryId = Guid.NewGuid();
             Guid clothingCategoryId = Guid.NewGuid();
@@ -37,6 +44,11 @@ namespace InventoryManagement.DAL.Data
             Guid productId3 = Guid.NewGuid();
             Guid productId4 = Guid.NewGuid();
             Guid productId5 = Guid.NewGuid();
+
+            modelBuilder.Entity<Store>().HasData(
+                new Store { Id = storeId1, Name = "Store 1", Location = "Location 1" },
+                new Store { Id = storeId2, Name = "Store 2", Location = "Location 2" }
+            );
 
             modelBuilder.Entity<Category>().HasData(
                 new Category { Id = electronicsCategoryId, Name = "Electronics", Description = "asd" },

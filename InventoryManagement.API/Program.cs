@@ -1,7 +1,11 @@
 
 using InventoryManagement.API.Seed;
+using InventoryManagement.BLL.Services.Implementations;
+using InventoryManagement.BLL.Services.Interfaces;
 using InventoryManagement.DAL.Data;
 using InventoryManagement.DAL.Entities;
+using InventoryManagement.DAL.Repositories.Implementations;
+using InventoryManagement.DAL.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +24,8 @@ option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddScoped<IDbInitializer,DbInitializer>();
+builder.Services.AddScoped<IUnitOfWork ,UnitOfWork>();
+builder.Services.AddScoped<IGenericServices, GenericServices>();
 
 
 var app = builder.Build();

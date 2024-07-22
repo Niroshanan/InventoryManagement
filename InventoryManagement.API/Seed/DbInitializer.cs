@@ -18,13 +18,7 @@ namespace InventoryManagement.API.Seed
         }
         public async Task SeedRolesAndUsers()
         {
-            string[] roleNames = { SD.Manager, SD.Operator};
-            Guid storeId1 = Guid.NewGuid();
-            Guid storeId2 = Guid.NewGuid();
-            _dbContext.Stores.Add(new Store { Id = storeId1, Name = "Store 1", Location = "Location 1" });
-            _dbContext.Stores.Add(new Store { Id = storeId2, Name = "Store 2", Location = "Location 2" });
-            await _dbContext.SaveChangesAsync();
-
+            string[] roleNames = { SD.Manager, SD.Operator , SD.SuperAdmin};
 
             foreach (var roleName in roleNames)
             {
@@ -34,15 +28,25 @@ namespace InventoryManagement.API.Seed
                 }
             }
 
-            // Add admin user if needed
-            string adminEmail = "admin@example.com";
-            string adminPassword = "Admin@123";
-            if (await _userManager.FindByEmailAsync(adminEmail) == null)
+            string username = "superadmin";
+            string email = "superadmin@example.com";
+            string password = "Superadmin@123";
+            if (await _userManager.FindByEmailAsync(email) == null)
             {
-                var adminUser = new ApplicationUser { UserName = adminEmail, Email = adminEmail ,StoreId = storeId1 };
-                await _userManager.CreateAsync(adminUser, adminPassword);
-                await _userManager.AddToRoleAsync(adminUser, SD.Manager);
-                await _userManager.AddToRoleAsync(adminUser, SD.Operator);
+                ApplicationUser user = new ApplicationUser
+                {
+                    UserName = username,
+                    Email = email,
+                    EmailConfirmed = true,
+                };
+                IdentityResult result = await _userManager.CreateAsync(user, password);
+                if (result.Succeeded)
+                {
+                    await _userManager.AddToRoleAsync(user, SD.SuperAdmin);
+                }
+            } else {
+                ApplicationUser user = await _userManager.FindByEmailAsync(email);
+                await _userManager.AddToRoleAsync(user, SD.SuperAdmin);
             }
         }
     }
