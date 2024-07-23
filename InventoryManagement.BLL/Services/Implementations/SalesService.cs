@@ -1,4 +1,5 @@
-﻿using InventoryManagement.BLL.DTOs;
+﻿using AutoMapper;
+using InventoryManagement.BLL.DTOs;
 using InventoryManagement.BLL.Services.Interfaces;
 using InventoryManagement.DAL.Entities;
 using InventoryManagement.DAL.Repositories.Interfaces;
@@ -13,15 +14,17 @@ namespace InventoryManagement.BLL.Services.Implementations
     public class SalesService : ISalesService
     {
         private readonly IUnitOfWork _unitOfWork;
-
-        public SalesService(IUnitOfWork unitOfWork)
+        private readonly IMapper _mapper;
+        public SalesService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
         public async Task AddSale(SaleDTO saleDTO)
         {
             try
             {
+                var store = await _unitOfWork.Stores.GetById(saleDTO.StoreId) ?? throw new Exception("Store not found");
                 var sale = new Sale
                 {
                     StoreId = saleDTO.StoreId,
@@ -32,6 +35,7 @@ namespace InventoryManagement.BLL.Services.Implementations
 
                 foreach (var item in saleDTO.ProductList)
                 {
+                    var product = await _unitOfWork.Products.GetById(item.ProductId) ?? throw new Exception("Product not found");
                     if(item.Quantity <= 0)
                     {
                         throw new Exception("Product quantity must be greater than 0.");
@@ -57,6 +61,27 @@ namespace InventoryManagement.BLL.Services.Implementations
             {
                 throw ex;
             }
+        }
+
+        public async Task<IEnumerable<SalesProductDto>> GetAllSales()
+        {
+            var saleProduct =await _unitOfWork.SaleProducts.GetAllSaleItems();
+            var saleProductDTOList = _mapper.Map<IEnumerable<SalesProductDto>>(saleProduct);
+            return saleProductDTOList;
+        }
+
+        public async Task<IEnumerable<SalesProductDto>> GetSalesByProduct(Guid productId)
+        {
+            var saleProduct = await _unitOfWork.SaleProducts.GetSaleItemsByProduct(productId);
+            var saleProductDTOList = _mapper.Map<IEnumerable<SalesProductDto>>(saleProduct);
+            return saleProductDTOList;
+        }
+
+        public async Task<IEnumerable<SalesProductDto>> GetSalesByStore(Guid storeId)
+        {
+            var saleProduct = await _unitOfWork.SaleProducts.GetSaleItemsByStore(storeId);
+            var saleProductDTOList = _mapper.Map<IEnumerable<SalesProductDto>>(saleProduct);
+            return saleProductDTOList;
         }
     }
 }

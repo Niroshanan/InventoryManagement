@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace InventoryManagement.DAL.Repositories.Implementations
 {
-    public class ProductRepository : GenericRepository<Product> ,IProductRepository 
+    public class ProductRepository : GenericRepository<Product>, IProductRepository
     {
         private readonly ApplicationDbContext _db;
         public ProductRepository(ApplicationDbContext dbContext) : base(dbContext)
@@ -20,7 +20,21 @@ namespace InventoryManagement.DAL.Repositories.Implementations
 
         public async Task<IEnumerable<Product>> GetAllProducts()
         {
-            return await _db.Products.Include(p=> p.Category).ToListAsync();
+            return await _db.Products.Include(p => p.Category).ToListAsync();
         }
+
+        public async Task UpdateProduct(Product product)
+        {
+            try
+            {
+                _db.Products.Update(product);
+                _db.SaveChanges();
+            }
+            catch 
+            {
+                throw;
+            }
+        }
+
     }
 }

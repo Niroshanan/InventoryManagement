@@ -91,7 +91,7 @@ namespace InventoryManagement.DAL.Migrations
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -141,7 +141,7 @@ namespace InventoryManagement.DAL.Migrations
                         column: x => x.StoreId,
                         principalTable: "Stores",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -160,7 +160,7 @@ namespace InventoryManagement.DAL.Migrations
                         column: x => x.StoreId,
                         principalTable: "Stores",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -179,13 +179,13 @@ namespace InventoryManagement.DAL.Migrations
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_StoreProducts_Stores_StoreId",
                         column: x => x.StoreId,
                         principalTable: "Stores",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -290,13 +290,13 @@ namespace InventoryManagement.DAL.Migrations
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_PurchaseProducts_Purchases_PurchaseId",
                         column: x => x.PurchaseId,
                         principalTable: "Purchases",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -315,13 +315,13 @@ namespace InventoryManagement.DAL.Migrations
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_SaleProducts_Sales_SaleId",
                         column: x => x.SaleId,
                         principalTable: "Sales",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
@@ -329,9 +329,9 @@ namespace InventoryManagement.DAL.Migrations
                 columns: new[] { "Id", "Description", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("3bfa97bf-5803-45e0-a871-fcd93eb43106"), "asd", "Electronics" },
-                    { new Guid("7ef5ae5d-f7e6-4836-85ed-2140f58f92d4"), "asd", "Grocery" },
-                    { new Guid("844ec57b-bcbd-4e75-b2fa-0e461aafa2a7"), "asd", "Clothing" }
+                    { new Guid("3d3ab377-a470-4d29-a2cc-6a0d89e52303"), "asd", "Clothing" },
+                    { new Guid("5f9e80ed-673d-452a-aed1-2114a4e7805e"), "asd", "Grocery" },
+                    { new Guid("ddfe80b5-bf43-444e-8c82-4526ba5b13b1"), "asd", "Electronics" }
                 });
 
             migrationBuilder.InsertData(
@@ -339,8 +339,8 @@ namespace InventoryManagement.DAL.Migrations
                 columns: new[] { "Id", "Location", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("06e29606-7202-46f9-b2f6-4c6a94d83273"), "Location 1", "Store 1" },
-                    { new Guid("8d6545bb-1548-4775-8580-e172db8cf597"), "Location 2", "Store 2" }
+                    { new Guid("2c2987f5-8727-423e-904d-666d6b10677d"), "Location 1", "Store 1" },
+                    { new Guid("f8249ce3-8121-4f66-a5fd-088858e4dcb8"), "Location 2", "Store 2" }
                 });
 
             migrationBuilder.InsertData(
@@ -348,11 +348,11 @@ namespace InventoryManagement.DAL.Migrations
                 columns: new[] { "Id", "CategoryId", "Name", "Price" },
                 values: new object[,]
                 {
-                    { new Guid("2075c11e-0797-4e89-a97f-3e99cd469c5e"), new Guid("3bfa97bf-5803-45e0-a871-fcd93eb43106"), "Laptop", 1000 },
-                    { new Guid("412dc302-bedb-46f0-adf6-befd1a29f3ae"), new Guid("3bfa97bf-5803-45e0-a871-fcd93eb43106"), "Mobile Phone", 500 },
-                    { new Guid("5a30d7d4-1d6f-42ef-bda3-4f1b79ce594c"), new Guid("844ec57b-bcbd-4e75-b2fa-0e461aafa2a7"), "Jeans", 50 },
-                    { new Guid("a807b6b7-ed58-4848-b764-6744d7ea82b3"), new Guid("844ec57b-bcbd-4e75-b2fa-0e461aafa2a7"), "T-shirt", 20 },
-                    { new Guid("cacc3353-ba36-4d5e-81ce-661363cc3308"), new Guid("7ef5ae5d-f7e6-4836-85ed-2140f58f92d4"), "Rice", 10 }
+                    { new Guid("66a6afd0-a4af-47b1-a52b-5ac52aa0129a"), new Guid("ddfe80b5-bf43-444e-8c82-4526ba5b13b1"), "Laptop", 1000 },
+                    { new Guid("738cc9d2-ea4d-4f0c-aab7-257b72c15fea"), new Guid("5f9e80ed-673d-452a-aed1-2114a4e7805e"), "Rice", 10 },
+                    { new Guid("8f7e5128-609a-447a-8551-5bdcbd2f232d"), new Guid("3d3ab377-a470-4d29-a2cc-6a0d89e52303"), "Jeans", 50 },
+                    { new Guid("a56ff53c-1384-4bfe-aabc-6097d151d79d"), new Guid("ddfe80b5-bf43-444e-8c82-4526ba5b13b1"), "Mobile Phone", 500 },
+                    { new Guid("f34491d5-66e1-4a52-8367-006c22b9d0f1"), new Guid("3d3ab377-a470-4d29-a2cc-6a0d89e52303"), "T-shirt", 20 }
                 });
 
             migrationBuilder.CreateIndex(

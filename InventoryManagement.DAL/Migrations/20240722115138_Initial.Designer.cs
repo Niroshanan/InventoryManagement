@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InventoryManagement.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240722041456_Initial")]
+    [Migration("20240722115138_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -116,19 +116,19 @@ namespace InventoryManagement.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("3bfa97bf-5803-45e0-a871-fcd93eb43106"),
+                            Id = new Guid("ddfe80b5-bf43-444e-8c82-4526ba5b13b1"),
                             Description = "asd",
                             Name = "Electronics"
                         },
                         new
                         {
-                            Id = new Guid("844ec57b-bcbd-4e75-b2fa-0e461aafa2a7"),
+                            Id = new Guid("3d3ab377-a470-4d29-a2cc-6a0d89e52303"),
                             Description = "asd",
                             Name = "Clothing"
                         },
                         new
                         {
-                            Id = new Guid("7ef5ae5d-f7e6-4836-85ed-2140f58f92d4"),
+                            Id = new Guid("5f9e80ed-673d-452a-aed1-2114a4e7805e"),
                             Description = "asd",
                             Name = "Grocery"
                         });
@@ -159,36 +159,36 @@ namespace InventoryManagement.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2075c11e-0797-4e89-a97f-3e99cd469c5e"),
-                            CategoryId = new Guid("3bfa97bf-5803-45e0-a871-fcd93eb43106"),
+                            Id = new Guid("66a6afd0-a4af-47b1-a52b-5ac52aa0129a"),
+                            CategoryId = new Guid("ddfe80b5-bf43-444e-8c82-4526ba5b13b1"),
                             Name = "Laptop",
                             Price = 1000
                         },
                         new
                         {
-                            Id = new Guid("a807b6b7-ed58-4848-b764-6744d7ea82b3"),
-                            CategoryId = new Guid("844ec57b-bcbd-4e75-b2fa-0e461aafa2a7"),
+                            Id = new Guid("f34491d5-66e1-4a52-8367-006c22b9d0f1"),
+                            CategoryId = new Guid("3d3ab377-a470-4d29-a2cc-6a0d89e52303"),
                             Name = "T-shirt",
                             Price = 20
                         },
                         new
                         {
-                            Id = new Guid("cacc3353-ba36-4d5e-81ce-661363cc3308"),
-                            CategoryId = new Guid("7ef5ae5d-f7e6-4836-85ed-2140f58f92d4"),
+                            Id = new Guid("738cc9d2-ea4d-4f0c-aab7-257b72c15fea"),
+                            CategoryId = new Guid("5f9e80ed-673d-452a-aed1-2114a4e7805e"),
                             Name = "Rice",
                             Price = 10
                         },
                         new
                         {
-                            Id = new Guid("412dc302-bedb-46f0-adf6-befd1a29f3ae"),
-                            CategoryId = new Guid("3bfa97bf-5803-45e0-a871-fcd93eb43106"),
+                            Id = new Guid("a56ff53c-1384-4bfe-aabc-6097d151d79d"),
+                            CategoryId = new Guid("ddfe80b5-bf43-444e-8c82-4526ba5b13b1"),
                             Name = "Mobile Phone",
                             Price = 500
                         },
                         new
                         {
-                            Id = new Guid("5a30d7d4-1d6f-42ef-bda3-4f1b79ce594c"),
-                            CategoryId = new Guid("844ec57b-bcbd-4e75-b2fa-0e461aafa2a7"),
+                            Id = new Guid("8f7e5128-609a-447a-8551-5bdcbd2f232d"),
+                            CategoryId = new Guid("3d3ab377-a470-4d29-a2cc-6a0d89e52303"),
                             Name = "Jeans",
                             Price = 50
                         });
@@ -292,13 +292,13 @@ namespace InventoryManagement.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("06e29606-7202-46f9-b2f6-4c6a94d83273"),
+                            Id = new Guid("2c2987f5-8727-423e-904d-666d6b10677d"),
                             Location = "Location 1",
                             Name = "Store 1"
                         },
                         new
                         {
-                            Id = new Guid("8d6545bb-1548-4775-8580-e172db8cf597"),
+                            Id = new Guid("f8249ce3-8121-4f66-a5fd-088858e4dcb8"),
                             Location = "Location 2",
                             Name = "Store 2"
                         });
@@ -469,7 +469,7 @@ namespace InventoryManagement.DAL.Migrations
                     b.HasOne("InventoryManagement.DAL.Entities.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Category");
@@ -480,7 +480,7 @@ namespace InventoryManagement.DAL.Migrations
                     b.HasOne("InventoryManagement.DAL.Entities.Store", "Store")
                         .WithMany("Purchases")
                         .HasForeignKey("StoreId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Store");
@@ -491,13 +491,13 @@ namespace InventoryManagement.DAL.Migrations
                     b.HasOne("InventoryManagement.DAL.Entities.Product", "Product")
                         .WithMany("PurchaseProducts")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("InventoryManagement.DAL.Entities.Purchase", "Purchase")
                         .WithMany("PurchaseProducts")
                         .HasForeignKey("PurchaseId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Product");
@@ -510,7 +510,7 @@ namespace InventoryManagement.DAL.Migrations
                     b.HasOne("InventoryManagement.DAL.Entities.Store", "Store")
                         .WithMany("Sales")
                         .HasForeignKey("StoreId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Store");
@@ -521,13 +521,13 @@ namespace InventoryManagement.DAL.Migrations
                     b.HasOne("InventoryManagement.DAL.Entities.Product", "Product")
                         .WithMany("SaleProducts")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("InventoryManagement.DAL.Entities.Sale", "Sale")
                         .WithMany("SaleProducts")
                         .HasForeignKey("SaleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Product");
@@ -540,13 +540,13 @@ namespace InventoryManagement.DAL.Migrations
                     b.HasOne("InventoryManagement.DAL.Entities.Product", "Product")
                         .WithMany("StoreProducts")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("InventoryManagement.DAL.Entities.Store", "Store")
                         .WithMany("StoreProducts")
                         .HasForeignKey("StoreId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Product");

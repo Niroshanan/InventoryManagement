@@ -1,6 +1,7 @@
 ﻿using InventoryManagement.DAL.Data;
 using InventoryManagement.DAL.Entities;
 using InventoryManagement.DAL.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,6 +61,24 @@ namespace InventoryManagement.DAL.Repositories.Implementations
                 .FirstOrDefault();
 
             return Task.FromResult(sp?.Quantity ?? 0);
+        }
+
+        public async Task<IEnumerable<StoreProduct>> GetRemainingProductQuantity(Guid? StoreId = null)
+        {
+            var storeProducts =  GetStoreProductQuery();
+            if (StoreId.HasValue)
+            {
+                storeProducts = storeProducts.Where(sp => sp.StoreId == StoreId);
+            }
+
+            return await storeProducts.ToListAsync(); ;
+        }
+
+        private IQueryable<StoreProduct> GetStoreProductQuery()
+        {
+            return _db.StoreProducts
+                .Include(sp => sp.Product)
+                .Include(sp => sp.Store);
         }
     }
 }

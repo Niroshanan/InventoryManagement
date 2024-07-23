@@ -2,7 +2,6 @@
 using InventoryManagement.BLL.DTOs;
 using InventoryManagement.BLL.Services.Interfaces;
 using InventoryManagement.BLL.Utility;
-using InventoryManagement.DAL.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,10 +12,10 @@ namespace InventoryManagement.API.Controllers.V1
     [Route("api/v{version:apiVersion}/[controller]")]
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController : ControllerBase
+    public class CategoryController : ControllerBase
     {
         private readonly IGenericServices _genericServices;
-        public ProductController(IGenericServices genericServices)
+        public CategoryController(IGenericServices genericServices)
         {
             _genericServices = genericServices;
         }
@@ -25,13 +24,14 @@ namespace InventoryManagement.API.Controllers.V1
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var products = await _genericServices.Products.GetAllProducts();
-            return Ok(products);
+            var categories = await _genericServices.Categories.GetAllCategories();
+            return Ok(categories);
         }
+
 
         [Authorize(Roles = $"{SD.Manager},{SD.SuperAdmin}")]
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] ProductDTO product)
+        public async Task<IActionResult> Post([FromBody] CategoryDTO categoryDto)
         {
             try
             {
@@ -39,8 +39,8 @@ namespace InventoryManagement.API.Controllers.V1
                 {
                     return BadRequest(ModelState);
                 }
-                await _genericServices.Products.AddProduct(product);
-                return Ok(product);
+                await _genericServices.Categories.AddNewCategory(categoryDto);
+                return Ok("Category Added Successfully");
             }
             catch (Exception ex)
             {
@@ -54,8 +54,8 @@ namespace InventoryManagement.API.Controllers.V1
         {
             try
             {
-                await _genericServices.Products.DeleteProdcut(id);
-                return Ok("Product deleted");
+                await _genericServices.Categories.DeleteCategory(id);
+                return Ok("Category Deleted");
             }
             catch (Exception ex)
             {
@@ -65,7 +65,7 @@ namespace InventoryManagement.API.Controllers.V1
 
         [Authorize(Roles = $"{SD.Manager},{SD.SuperAdmin}")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(Guid id, [FromBody] ProductDTO product)
+        public async Task<IActionResult> Put(Guid id, [FromBody] CategoryDTO categoryDto)
         {
             try
             {
@@ -73,8 +73,8 @@ namespace InventoryManagement.API.Controllers.V1
                 {
                     return BadRequest(ModelState);
                 }
-                await _genericServices.Products.UpdateProduct(id, product);
-                return Ok(product);
+                await _genericServices.Categories.UpdateCategory(id, categoryDto);
+                return Ok("Category Updated Successfully");
             }
             catch (Exception ex)
             {

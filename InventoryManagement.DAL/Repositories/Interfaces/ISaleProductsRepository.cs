@@ -9,5 +9,9 @@ namespace InventoryManagement.DAL.Repositories.Interfaces
 {
     public interface ISaleProductsRepository : IGenericRepository<SaleProduct>
     {
+        Task<IEnumerable<SaleProduct>> GetAllSaleItems();
+
+        Task<IEnumerable<SaleProduct>> GetSaleItemsByStore(Guid storeId);
+        Task<IEnumerable<SaleProduct>> GetSaleItemsByProduct(Guid productId);
     }
 }

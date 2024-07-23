@@ -15,6 +15,8 @@ namespace InventoryManagement.DAL.Repositories.Interfaces
         ISaleProductsRepository SaleProducts { get; }
         IStoreRepository Stores { get; }
         IStoreProductRepository StoreProducts { get; }
+        ICategoryRepository Categories { get; }
         Task<int> SaveChanges();
+
     }
 }

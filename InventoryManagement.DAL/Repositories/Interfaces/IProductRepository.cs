@@ -10,5 +10,6 @@ namespace InventoryManagement.DAL.Repositories.Interfaces
     public interface IProductRepository : IGenericRepository<Product>
     {
         Task<IEnumerable<Product>> GetAllProducts();
+        Task UpdateProduct(Product product);
     }
 }

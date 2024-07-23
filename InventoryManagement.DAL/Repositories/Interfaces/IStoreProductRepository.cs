@@ -15,5 +15,7 @@ namespace InventoryManagement.DAL.Repositories.Interfaces
         Task<bool> DeductSaleQuantity(Guid storeId, Guid productId, int quantity);
 
         Task<int> GetAvailableProductQuantity(Guid storeId, Guid productId);
+
+        Task<IEnumerable<StoreProduct>> GetRemainingProductQuantity(Guid? StoreId = null);
     }
 }

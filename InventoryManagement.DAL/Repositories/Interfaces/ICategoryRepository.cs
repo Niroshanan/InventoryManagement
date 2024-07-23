@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace InventoryManagement.DAL.Repositories.Interfaces
 {
-    public interface IStoreRepository : IGenericRepository<Store>
+    public interface ICategoryRepository : IGenericRepository<Category>
     {
-        Task<IEnumerable<Store>> GetAllStores();
-        Task AddNewStoreAsync(Store store);
-        Task EditStore(Store store);
+        Task<IEnumerable<Category>> GetAllCategories();
+        Task UpdateCategory(Category category);
     }
 }

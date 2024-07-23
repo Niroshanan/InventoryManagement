@@ -8,14 +8,12 @@ using System.Threading.Tasks;
 
 namespace InventoryManagement.BLL.Services.Interfaces
 {
-    public interface IProductService
+    public interface ICategoryService
     {
-        Task<IEnumerable<Product>> GetAllProducts();
-        Task AddProduct(ProductDTO productDto);
+        Task<IEnumerable<Category>> GetAllCategories();
+        Task<int> AddNewCategory(CategoryDTO categoryDto);
+        Task<int> DeleteCategory(Guid id);
 
-        Task<int> DeleteProdcut(Guid id);
-
-        Task UpdateProduct(Guid id, ProductDTO productDto);
-
+        Task UpdateCategory(Guid id, CategoryDTO categoryDto);
     }
 }

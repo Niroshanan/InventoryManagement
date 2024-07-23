@@ -11,6 +11,8 @@ namespace InventoryManagement.BLL.Services.Interfaces
         IProductService Products { get; }
         IPurchaseService Purchase { get; }
         ISalesService Sales { get; }
+        ICategoryService Categories { get; }
+        IStoreService Stores { get; }
 
     }
 }

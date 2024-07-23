@@ -63,7 +63,61 @@ namespace InventoryManagement.DAL.Data
                 new Product { Id = productId4, Name = "Mobile Phone", Price = 500, CategoryId = electronicsCategoryId },
                 new Product { Id = productId5, Name = "Jeans", Price = 50, CategoryId = clothingCategoryId }
             );
+            
+            modelBuilder.Entity<Product>()
+                .HasOne(p=>p.Category)
+                .WithMany(c=>c.Products)
+                .HasForeignKey(p=>p.CategoryId)
+                .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<Sale>()
+                .HasOne(s => s.Store)
+                .WithMany(s => s.Sales)
+                .HasForeignKey(s => s.StoreId)
+                .OnDelete(DeleteBehavior.Restrict); 
+
+            modelBuilder.Entity<Purchase>()
+                .HasOne(p => p.Store)
+                .WithMany(p => p.Purchases)
+                .HasForeignKey(p => p.StoreId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<StoreProduct>()
+                .HasOne(s => s.Store)
+                .WithMany(sp => sp.StoreProducts)
+                .HasForeignKey(s => s.StoreId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<StoreProduct>()
+                .HasOne(p => p.Product)
+                .WithMany(sp => sp.StoreProducts)
+                .HasForeignKey(p => p.ProductId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<PurchaseProduct>()
+                .HasOne(p => p.Purchase)
+                .WithMany(pp => pp.PurchaseProducts)
+                .HasForeignKey(p => p.PurchaseId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<PurchaseProduct>()
+                .HasOne(p => p.Product)
+                .WithMany(pp => pp.PurchaseProducts)
+                .HasForeignKey(p => p.ProductId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+            modelBuilder.Entity<SaleProduct>()
+                .HasOne(s => s.Sale)
+                .WithMany(sp => sp.SaleProducts)
+                .HasForeignKey(s => s.SaleId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<SaleProduct>()
+                .HasOne(p => p.Product)
+                .WithMany(sp => sp.SaleProducts)
+                .HasForeignKey(p => p.ProductId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

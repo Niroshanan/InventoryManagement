@@ -41,7 +41,7 @@ namespace InventoryManagement.DAL.Repositories.Implementations
             }
         }
 
-        public async Task<T> GetById(object id)
+        public async Task<T> GetById(Guid id)
         {
             try
             {

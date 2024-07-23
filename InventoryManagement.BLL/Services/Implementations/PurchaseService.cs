@@ -22,6 +22,7 @@ namespace InventoryManagement.BLL.Services.Implementations
         {
             try
             {
+                var store = await _unitOfWork.Stores.GetById(purchaseDTO.StoreId) ?? throw new Exception("Store not found");
                 var purchase = new Purchase
                 {
                     StoreId = purchaseDTO.StoreId,
@@ -32,6 +33,7 @@ namespace InventoryManagement.BLL.Services.Implementations
 
                 foreach (var item in purchaseDTO.ProductList)
                 {
+                    var product = await _unitOfWork.Products.GetById(item.ProductId) ?? throw new Exception("Product not found");
                     var purchaseProduct = new PurchaseProduct
                     {
                         PurchaseId = purchase.Id,

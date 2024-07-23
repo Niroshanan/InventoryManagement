@@ -18,6 +18,7 @@ namespace InventoryManagement.DAL.Repositories.Implementations
         public ISaleProductsRepository SaleProducts { get; }
         public IStoreRepository Stores { get; }
         public IStoreProductRepository StoreProducts { get; }
+        public ICategoryRepository Categories { get; }
 
         public UnitOfWork(ApplicationDbContext dbContext)
         {
@@ -29,11 +30,13 @@ namespace InventoryManagement.DAL.Repositories.Implementations
             SaleProducts = new SaleProductsRepository(_db);
             Stores = new StoreRepository(_db);
             StoreProducts = new StoreProductRepository(_db);
+            Categories = new CategoryRepository(_db);
         }
 
         public Task<int> SaveChanges()
         {
             return _db.SaveChangesAsync();
         }
+
     }
 }
